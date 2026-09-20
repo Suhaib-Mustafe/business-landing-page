@@ -1,0 +1,959 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Northstar Studio</title>
+    <style>
+        :root {
+            --bg: #f4f7f6;
+            --panel: #ffffff;
+            --primary: #102a27;
+            --primary-soft: #1d4d49;
+            --accent: #d9a441;
+            --accent-soft: #fbe7b2;
+            --muted: #5c6767;
+            --line: rgba(16, 42, 39, 0.12);
+            --shadow: 0 20px 45px rgba(16, 42, 39, 0.14);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(180deg, #f8faf9 0%, #edf4f3 100%);
+            color: var(--primary);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            width: min(1180px, calc(100% - 40px));
+            margin: 0 auto;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.82);
+            border-bottom: 1px solid rgba(16, 42, 39, 0.06);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 76px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        .brand-mark {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary) 0%, #245d58 100%);
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+
+        .brand-mark::before {
+            content: "";
+            position: absolute;
+            inset: 8px;
+            border: 2px solid rgba(255,255,255,0.8);
+            border-radius: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            color: var(--muted);
+            font-size: 0.96rem;
+        }
+
+        .nav-links a {
+            transition: color 0.25s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            border-radius: 999px;
+            padding: 15px 28px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-soft) 100%);
+            color: white;
+            box-shadow: 0 14px 24px rgba(16, 42, 39, 0.2);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 1px solid rgba(16, 42, 39, 0.1);
+        }
+
+        .hero {
+            padding: 74px 0 50px;
+        }
+
+        .hero-wrap {
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            align-items: center;
+            gap: 38px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(217, 164, 65, 0.14);
+            color: #8a651e;
+            font-size: 0.74rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+        }
+
+        h1 {
+            font-size: clamp(2.8rem, 5vw, 5rem);
+            line-height: 0.98;
+            letter-spacing: -0.05em;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        h1 .highlight {
+            color: var(--primary-soft);
+        }
+
+        .hero p {
+            max-width: 620px;
+            color: var(--muted);
+            font-size: 1.08rem;
+            margin-bottom: 30px;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+        }
+
+        .stats {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            min-width: 130px;
+        }
+
+        .stat strong {
+            display: block;
+            font-size: clamp(1.6rem, 2vw, 2.1rem);
+            color: var(--primary);
+        }
+
+        .stat span {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .hero-visual {
+            position: relative;
+            min-height: 520px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .visual-card {
+            position: relative;
+            width: min(480px, 100%);
+            min-height: 470px;
+            background: linear-gradient(135deg, #0f2e2c 0%, #163d3a 100%);
+            border-radius: 32px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transform: rotate(4deg);
+        }
+
+        .visual-card::before {
+            content: "";
+            position: absolute;
+            inset: 22px;
+            border-radius: 26px;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.02);
+        }
+
+        .visual-card::after {
+            content: "";
+            position: absolute;
+            inset: auto 36px 28px 36px;
+            height: 140px;
+            border-radius: 18px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.15), rgba(255,255,255,0.02));
+        }
+
+        .dashboard {
+            position: absolute;
+            left: 48px;
+            right: 48px;
+            top: 52px;
+            bottom: 76px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.12);
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .dash-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dots span {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.42);
+            display: inline-block;
+        }
+
+        .dash-chart {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 12px;
+            align-items: end;
+            height: 170px;
+            margin-top: 18px;
+        }
+
+        .dash-chart span {
+            display: block;
+            border-radius: 12px 12px 0 0;
+            background: linear-gradient(180deg, #ebc66b 0%, #f3d78c 100%);
+            opacity: 0.95;
+        }
+
+        .dash-chart span:nth-child(1) { height: 35%; }
+        .dash-chart span:nth-child(2) { height: 48%; }
+        .dash-chart span:nth-child(3) { height: 62%; }
+        .dash-chart span:nth-child(4) { height: 56%; }
+        .dash-chart span:nth-child(5) { height: 78%; }
+        .dash-chart span:nth-child(6) { height: 90%; }
+        .dash-chart span:nth-child(7) { height: 100%; }
+
+        .mini-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 14px;
+        }
+
+        .mini-card {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 14px 10px;
+            text-align: center;
+            color: white;
+        }
+
+        .mini-card strong {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+        }
+
+        .mini-card span {
+            font-size: 0.68rem;
+            color: rgba(255,255,255,0.7);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .badge {
+            position: absolute;
+            right: -12px;
+            bottom: 24px;
+            background: #f4f8f7;
+            color: var(--primary);
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+            padding: 18px 20px;
+            min-width: 180px;
+        }
+
+        .badge strong {
+            display: block;
+            font-size: 1.6rem;
+        }
+
+        .badge span {
+            color: var(--muted);
+            font-size: 0.8rem;
+        }
+
+        section {
+            padding: 48px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 34px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 3vw, 3rem);
+            letter-spacing: -0.04em;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+
+        .section-header p {
+            color: var(--muted);
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .features-grid,
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card,
+        .service-card {
+            background: rgba(255,255,255,0.9);
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            padding: 28px 22px;
+            box-shadow: 0 12px 25px rgba(16, 42, 39, 0.04);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .feature-card:hover,
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 32px rgba(16, 42, 39, 0.08);
+        }
+
+        .feature-icon,
+        .service-icon {
+            width: 58px;
+            height: 58px;
+            display: grid;
+            place-items: center;
+            border-radius: 18px;
+            background: linear-gradient(135deg, var(--accent-soft) 0%, rgba(13, 93, 88, 0.08) 100%);
+            color: var(--primary);
+            margin-bottom: 18px;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .feature-card h3,
+        .service-card h3 {
+            margin-bottom: 12px;
+            font-size: 1.28rem;
+            color: var(--primary);
+        }
+
+        .feature-card p,
+        .service-card p {
+            color: var(--muted);
+        }
+
+        .about {
+            background: linear-gradient(135deg, #0f2f2d 0%, #163d3a 100%);
+            color: white;
+        }
+
+        .about-wrap {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .about-content h2 {
+            font-size: clamp(2.2rem, 4vw, 3.2rem);
+            letter-spacing: -0.05em;
+            margin-bottom: 14px;
+        }
+
+        .about-content p {
+            color: rgba(255,255,255,0.78);
+            margin-bottom: 30px;
+            max-width: 560px;
+        }
+
+        .about-metrics {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .about-metrics strong {
+            display: block;
+            font-size: 2rem;
+            color: #f7d588;
+            margin-bottom: 4px;
+        }
+
+        .about-metrics span {
+            color: rgba(255,255,255,0.72);
+            font-size: 0.9rem;
+        }
+
+        .about-panel {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 30px;
+            padding: 26px;
+            min-height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-panel::before {
+            content: "";
+            position: absolute;
+            inset: 18px;
+            border-radius: 24px;
+            background: linear-gradient(160deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+        }
+
+        .about-panel-inner {
+            position: relative;
+            z-index: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: rgba(255,255,255,0.8);
+            text-transform: uppercase;
+            letter-spacing: 0.09em;
+            font-size: 0.72rem;
+            margin-bottom: 12px;
+        }
+
+        .panel-list {
+            display: grid;
+            gap: 14px;
+        }
+
+        .panel-item {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 18px;
+            padding: 16px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .panel-item small {
+            color: rgba(255,255,255,0.68);
+        }
+
+        .contact-wrap {
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .contact-card {
+            background: white;
+            border: 1px solid var(--line);
+            border-radius: 26px;
+            padding: 28px;
+            box-shadow: 0 18px 30px rgba(16, 42, 39, 0.04);
+        }
+
+        .contact-form {
+            display: grid;
+            gap: 18px;
+        }
+
+        .field {
+            display: grid;
+            gap: 8px;
+        }
+
+        .field label {
+            font-size: 0.88rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .field input,
+        .field textarea {
+            width: 100%;
+            border: 1px solid rgba(16, 42, 39, 0.14);
+            border-radius: 14px;
+            background: #f6f8f8;
+            padding: 16px 18px;
+            font: inherit;
+            color: var(--primary);
+            resize: vertical;
+        }
+
+        .field input:focus,
+        .field textarea:focus {
+            outline: none;
+            border-color: rgba(16, 42, 39, 0.3);
+            box-shadow: 0 0 0 4px rgba(16, 42, 39, 0.05);
+        }
+
+        .contact-side {
+            display: grid;
+            gap: 18px;
+        }
+
+        .contact-info {
+            background: linear-gradient(135deg, #f6f9f8 0%, #edf3f2 100%);
+            border-radius: 24px;
+            padding: 28px;
+            border: 1px solid var(--line);
+        }
+
+        .contact-info h3 {
+            margin-bottom: 12px;
+            font-size: 1.65rem;
+            letter-spacing: -0.04em;
+        }
+
+        .contact-info p {
+            color: var(--muted);
+            margin-bottom: 22px;
+        }
+
+        .socials {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .social {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: white;
+            border: 1px solid var(--line);
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        footer {
+            background: #0d2725;
+            color: rgba(255,255,255,0.82);
+            padding: 26px 0;
+        }
+
+        .footer-wrap {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 900px) {
+            .hero-wrap,
+            .about-wrap,
+            .contact-wrap,
+            .features-grid,
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 18px 0;
+                gap: 16px;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .hero {
+                padding-top: 40px;
+            }
+
+            .hero-visual {
+                min-height: 420px;
+            }
+        }
+
+        @media (max-width: 540px) {
+            .btn {
+                width: 100%;
+            }
+
+            .hero-actions {
+                display: grid;
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 18px;
+            }
+
+            .socials {
+                justify-content: center;
+            }
+
+            .footer-wrap {
+                text-align: center;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="topbar">
+        <div class="container nav">
+            <div class="brand" aria-label="Northstar Studio home">
+                <span class="brand-mark" aria-hidden="true"></span>
+                <span>Northstar</span>
+            </div>
+
+            <nav class="nav-links" aria-label="Main navigation">
+                <a href="#features">Features</a>
+                <a href="#services">Services</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </nav>
+
+            <a class="btn btn-primary" href="#contact">Get Started</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container hero-wrap">
+                <div>
+                    <span class="eyebrow">Strategic growth partner</span>
+                    <h1>Build a business presence that feels <span class="highlight">premium</span>.</h1>
+                    <p>We create polished digital experiences that help brands look credible, convert faster, and grow with confidence. Every detail is designed to feel professional, clear, and memorable.</p>
+
+                    <div class="hero-actions">
+                        <a class="btn btn-primary" href="#services">View Services</a>
+                        <a class="btn btn-secondary" href="#contact">Let’s Talk</a>
+                    </div>
+
+                    <div class="stats" aria-label="Business statistics">
+                        <div class="stat">
+                            <strong>500+</strong>
+                            <span>Projects launched</span>
+                        </div>
+                        <div class="stat">
+                            <strong>98%</strong>
+                            <span>Client satisfaction</span>
+                        </div>
+                        <div class="stat">
+                            <strong>5Y</strong>
+                            <span>Growth experience</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-visual" aria-label="Business dashboard illustration">
+                    <div class="visual-card">
+                        <div class="dashboard">
+                            <div class="dash-top">
+                                <span>Progress</span>
+                                <div class="dots" aria-hidden="true">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+
+                            <div class="dash-chart" aria-hidden="true">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+
+                            <div class="mini-metrics">
+                                <div class="mini-card">
+                                    <strong>24K</strong>
+                                    <span>Leads</span>
+                                </div>
+                                <div class="mini-card">
+                                    <strong>86%</strong>
+                                    <span>ROI</span>
+                                </div>
+                                <div class="mini-card">
+                                    <strong>12m</strong>
+                                    <span>Growth</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="badge">
+                        <strong>+42%</strong>
+                        <span>Brand visibility</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Why businesses choose us</h2>
+                    <p>Our process is built around clarity, authority, and conversion-focused design that works beautifully across every device.</p>
+                </div>
+
+                <div class="features-grid">
+                    <article class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Fast performance</h3>
+                        <p>Optimized layouts and lightweight design ensure your website feels smooth, responsive, and reliable.</p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>Responsive design</h3>
+                        <p>Your brand looks sharp from mobile screens to large desktop displays without sacrificing quality.</p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <h3>Trust-first experience</h3>
+                        <p>We build polished interfaces that help customers feel safe, comfortable, and ready to take action.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="services">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Core services</h2>
+                    <p>From strategy to launch, we create digital solutions tailored to your growth goals and audience expectations.</p>
+                </div>
+
+                <div class="services-grid">
+                    <article class="service-card">
+                        <div class="service-icon">01</div>
+                        <h3>Brand strategy</h3>
+                        <p>Clear positioning and messaging that make your business stand out in a crowded market.</p>
+                    </article>
+
+                    <article class="service-card">
+                        <div class="service-icon">02</div>
+                        <h3>UI/UX design</h3>
+                        <p>Elegant and intuitive interfaces that keep visitors engaged and guide them toward conversion.</p>
+                    </article>
+
+                    <article class="service-card">
+                        <div class="service-icon">03</div>
+                        <h3>SEO optimization</h3>
+                        <p>Improved discoverability and stronger search visibility to help your audience find you faster.</p>
+                    </article>
+
+                    <article class="service-card">
+                        <div class="service-icon">04</div>
+                        <h3>Web development</h3>
+                        <p>Clean, scalable front-end experiences designed to support your business goals and growth plans.</p>
+                    </article>
+
+                    <article class="service-card">
+                        <div class="service-icon">05</div>
+                        <h3>E-commerce</h3>
+                        <p>High-converting storefront experiences that simplify customer journeys and drive higher value sales.</p>
+                    </article>
+
+                    <article class="service-card">
+                        <div class="service-icon">06</div>
+                        <h3>Ongoing support</h3>
+                        <p>Reliable maintenance and improvements so your digital presence continues to perform over time.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="about" id="about">
+            <div class="container about-wrap">
+                <div class="about-content">
+                    <h2>We turn ideas into standout digital experiences.</h2>
+                    <p>Our team combines strategy, design, and technical precision to help businesses create polished online identities that inspire trust and generate measurable results.</p>
+
+                    <div class="about-metrics">
+                        <div>
+                            <strong>500+</strong>
+                            <span>Projects delivered</span>
+                        </div>
+                        <div>
+                            <strong>100%</strong>
+                            <span>Client focus</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-panel" aria-label="Business progress panel">
+                    <div class="about-panel-inner">
+                        <div class="panel-header">
+                            <span>Performance</span>
+                            <span>2026</span>
+                        </div>
+
+                        <div class="panel-list">
+                            <div class="panel-item">
+                                <span>Campaign reach</span>
+                                <strong>84%</strong>
+                            </div>
+                            <div class="panel-item">
+                                <span>Lead quality</span>
+                                <strong>91%</strong>
+                            </div>
+                            <div class="panel-item">
+                                <span>Conversion lift</span>
+                                <strong>+42%</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="container contact-wrap">
+                <div class="contact-card">
+                    <form class="contact-form">
+                        <div class="field">
+                            <label for="name">Name</label>
+                            <input id="name" type="text" placeholder="Enter your full name">
+                        </div>
+
+                        <div class="field">
+                            <label for="email">Email</label>
+                            <input id="email" type="email" placeholder="Enter your email address">
+                        </div>
+
+                        <div class="field">
+                            <label for="message">Message</label>
+                            <textarea id="message" rows="5" placeholder="Tell us about your project"></textarea>
+                        </div>
+
+                        <button class="btn btn-primary" type="submit">Send Request</button>
+                    </form>
+                </div>
+
+                <div class="contact-side">
+                    <div class="contact-info">
+                        <h3>Let’s build something remarkable.</h3>
+                        <p>Tell us what you need, and we’ll help shape a professional digital presence that reflects your business with clarity and confidence.</p>
+
+                        <div class="socials" aria-label="Social links">
+                            <span class="social">in</span>
+                            <span class="social">X</span>
+                            <span class="social">f</span>
+                            <span class="social">ig</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-wrap">
+            <div>© 2026 Northstar Studio. All rights reserved.</div>
+            <div>Crafted for bold brands.</div>
+        </div>
+    </footer>
+</body>
+</html>
